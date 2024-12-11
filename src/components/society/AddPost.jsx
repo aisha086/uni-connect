@@ -33,6 +33,11 @@ export function AddPost(){
             errors.caption = 'Caption must be at least 10 characters';
         }
 
+        if (!image) {
+          errors.image = 'Image is required';
+        } 
+    
+
         setValidationErrors(errors);
         return !Object.keys(errors).length;
     };
@@ -75,6 +80,12 @@ export function AddPost(){
         }
       };
 
+      const handleFileSelect = (e) => {
+        if (e.target.files[0]) {
+          setImage(e.target.files[0]);
+        }
+      };
+
       return (
         <div className="min-h-screen flex items-center justify-center p-4">
           <div className="max-w-[70%] border border-[#6A1E55] px-6 py-8 rounded-lg shadow-lg shadow-[#6A1E55]/20">
@@ -109,11 +120,25 @@ export function AddPost(){
             )}
           </div>
 
-          <Input
+          <div>
+          <input
             type="file"
-            onChange={(e) => setImage(e.target.files?.[0] || null)}
+            id="logo"
+            className="hidden"
             accept="image/*"
+            onChange={handleFileSelect}
           />
+
+          <label
+            htmlFor="logo"
+            className="inline-block px-4 py-2 bg-[#6A1E55] text-white rounded hover:bg-[#5a1947] cursor-pointer"
+          >
+            {image ? image.name : "Choose Logo"}
+          </label>
+          {validationErrors.image && (
+              <p className="text-red-500 text-sm">{validationErrors.image}</p>
+            )}
+          </div>
           <Button type="submit">Add Post</Button>
         </form>
       {error && <Alert variant="error">{error}</Alert>}

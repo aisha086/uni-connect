@@ -55,6 +55,11 @@ export function CreateEvent() {
       errors.venue = 'Venue must be at least 3 characters';
     }
 
+    if (!image) {
+      errors.image = 'Image is required';
+    } 
+
+
     setValidationErrors(errors);
     return !Object.keys(errors).length;
   };
@@ -100,6 +105,12 @@ export function CreateEvent() {
       setImage(null);
     } catch (error) {
       setError('Failed to create event. Please try again.');
+    }
+  };
+
+  const handleFileSelect = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
     }
   };
 
@@ -164,11 +175,25 @@ export function CreateEvent() {
             )}
           </div>
 
-          <Input
+          <div>
+          <input
             type="file"
-            onChange={(e) => setImage(e.target.files?.[0] || null)}
+            id="logo"
+            className="hidden"
             accept="image/*"
+            onChange={handleFileSelect}
           />
+
+          <label
+            htmlFor="logo"
+            className="inline-block px-4 py-2 bg-[#6A1E55] text-white rounded hover:bg-[#5a1947] cursor-pointer"
+          >
+            {image ? image.name : "Choose Logo"}
+          </label>
+          {validationErrors.image && (
+              <p className="text-red-500 text-sm">{validationErrors.image}</p>
+            )}
+          </div>
           
           {error && <Alert variant="error">{error}</Alert>}
           {success && <Alert variant="success">{success}</Alert>}
