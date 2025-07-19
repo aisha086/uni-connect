@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { addDoc, collection, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import { supabase, getSignedUrl } from '../../lib/supabase';
+import { supabase, getUrl } from '../../lib/supabase';
 import { useAuthContext } from '../auth/AuthProvider';
 import { CabinetMemberList } from '../create-society/CabinetMemberList';
 import { CabinetMemberForm } from '../create-society/CabinetMemberForm';
@@ -108,7 +108,7 @@ export function CreateSociety() {
           setError('Error uploading image');
         }
 
-        imageUrl = await getSignedUrl('society-icons', data.path);
+        imageUrl = await getUrl('society-icons', data.path);
         console.log("this is image url");
         console.log(imageUrl);
 

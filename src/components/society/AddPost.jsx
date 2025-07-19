@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import { supabase, getSignedUrl } from '../../lib/supabase';
+import { supabase, getUrl } from '../../lib/supabase';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Alert } from '../ui/Alert';
@@ -61,7 +61,7 @@ export function AddPost(){
     
             if (error) throw error;
     
-            imageUrl = await getSignedUrl('post-images', data.path);
+            imageUrl = await getUrl('post-images', data.path);
           }
     
           await addDoc(collection(db, 'posts'), {

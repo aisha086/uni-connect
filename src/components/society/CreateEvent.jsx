@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams,useNavigate } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import { supabase, getSignedUrl } from '../../lib/supabase';
+import { supabase, getUrl } from '../../lib/supabase';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Alert } from '../ui/Alert';
@@ -83,7 +83,7 @@ export function CreateEvent() {
 
         if (error) throw error;
 
-        imageUrl = await getSignedUrl('event-images', data.path);
+        imageUrl = await getUrl('event-images', data.path);
       }
 
       const eventData = {
